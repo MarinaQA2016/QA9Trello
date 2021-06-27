@@ -7,6 +7,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.util.List;
+
 public class CurrentBoardTests extends TestBase{
     @BeforeMethod
     public void initTests() throws InterruptedException {
@@ -69,6 +71,67 @@ public class CurrentBoardTests extends TestBase{
         driver.findElement(By.cssSelector(".js-cancel")).click();
         Thread.sleep(3000);
     }
+
+    @Test
+    public void archiveFirstList() throws InterruptedException {
+        List<WebElement> collumnsList = driver.findElements(By.cssSelector(".js-list-content"));
+        if (collumnsList.size() == 0){
+            System.out.println("size: " + collumnsList.size());
+            // press 'Add list button'
+            WebElement createListButton = driver.findElement(By.cssSelector(".placeholder"));
+            createListButton.click();
+            // enter name of the list
+            WebElement nameListField = driver.findElement(By.cssSelector("input[name='name']"));
+            editField(nameListField, "Test List");
+            // click 'Add list' button
+            WebElement saveListButton = driver.findElement(By.cssSelector(".js-save-edit"));
+            saveListButton.click();
+            // click 'x' button to cancel new list creating
+            Thread.sleep(2000);
+            WebElement cancelListCreatingButton = driver.findElement(By.cssSelector(".js-cancel-edit"));
+            cancelListCreatingButton.click();
+            Thread.sleep(2000);
+        }
+        // -- click on the header menu
+        driver.findElement(By.cssSelector(".list-header-extras-menu")).click();
+        Thread.sleep(2000);
+        // -- click on "Archive menu"
+        driver.findElement(By.cssSelector(".js-close-list")).click();
+        Thread.sleep(2000);
+    }
+    @Test
+    public void copyFirstList() throws InterruptedException {
+        List<WebElement> collumnsList = driver.findElements(By.cssSelector(".js-list-content"));
+        if (collumnsList.size() == 0){
+            System.out.println("size: " + collumnsList.size());
+            // press 'Add list button'
+            WebElement createListButton = driver.findElement(By.cssSelector(".placeholder"));
+            createListButton.click();
+            // enter name of the list
+            WebElement nameListField = driver.findElement(By.cssSelector("input[name='name']"));
+            editField(nameListField, "Test List");
+            // click 'Add list' button
+            WebElement saveListButton = driver.findElement(By.cssSelector(".js-save-edit"));
+            saveListButton.click();
+            // click 'x' button to cancel new list creating
+            Thread.sleep(2000);
+            WebElement cancelListCreatingButton = driver.findElement(By.cssSelector(".js-cancel-edit"));
+            cancelListCreatingButton.click();
+
+            Thread.sleep(2000);
+        }
+        // -- click on the header menu
+        driver.findElement(By.cssSelector(".list-header-extras-menu")).click();
+        Thread.sleep(2000);
+        // -- click on "Copy menu"
+        driver.findElement(By.cssSelector(".js-copy-list")).click();
+        Thread.sleep(2000);
+        WebElement nameField  = driver.findElement(By.cssSelector(".js-autofocus"));
+        nameField.sendKeys("nameChanged");
+        driver.findElement(By.cssSelector(".js-submit")).click();
+        Thread.sleep(2000);
+    }
+
 
     private void editField(WebElement field, String value) {
         field.click();
