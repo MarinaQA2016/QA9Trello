@@ -12,19 +12,20 @@ import java.util.List;
 public class CurrentBoardTests extends TestBase{
     @BeforeMethod
     public void initTests() throws InterruptedException {
+        Thread.sleep(5000);
         // click 'Log in' button
         driver.findElement(By.cssSelector(".text-primary")).click();
         Thread.sleep(3000);
         // fill in email field
         WebElement emailField = driver.findElement(By.id("user"));
-        editField(emailField, "marinaqatest2019@gmail.com");
+        editField(emailField, LOGIN);
         Thread.sleep(3000);
         // press 'Log in with Atlassian' button
         driver.findElement(By.id("login")).click();
         Thread.sleep(3000);
         // fill in password field
         WebElement passwordField = driver.findElement(By.id("password"));
-        editField(passwordField, "marinaqa");
+        editField(passwordField, PASSWORD);
         // press log-in button
         driver.findElement(By.id("login-submit")).click();
         Thread.sleep(20000);
@@ -133,8 +134,5 @@ public class CurrentBoardTests extends TestBase{
     }
 
 
-    private void editField(WebElement field, String value) {
-        field.click();
-        field.sendKeys(value);
-    }
+
 }
