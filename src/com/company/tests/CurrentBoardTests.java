@@ -8,6 +8,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class CurrentBoardTests extends TestBase{
     @BeforeMethod
@@ -38,7 +39,9 @@ public class CurrentBoardTests extends TestBase{
         //  go to the 'Boards' tab
         waitUntilElementIsClickable(By.xpath("//a[@data-test-id = 'home-team-boards-tab']"),10);
         driver.findElement(By.xpath("//a[@data-test-id = 'home-team-boards-tab']")).click();
-        Thread.sleep(1000);
+        //Thread.sleep(1000);
+        //waitUntilElementIsVisible(By.xpath("//h3[contains(text(),'Your Workspace boards')]"),10);
+        waitUntilElementTextIs(By.xpath("//h3"),"Your Workspace boards",10);
         waitUntilElementIsClickable(By.xpath("//a[@class = 'board-tile'][.//div[@title='QA Haifa9']]"),10);
         // open 'QA Haifa9' board
         WebElement qaHaifa9Board = driver.findElement(By.xpath("//a[@class = 'board-tile'][.//div[@title='QA Haifa9']]"));
@@ -63,12 +66,14 @@ public class CurrentBoardTests extends TestBase{
         WebElement saveListButton = driver.findElement(By.cssSelector(".js-save-edit"));
         saveListButton.click();
         // click 'x' button to cancel new list creating
+
         waitUntilElementIsClickable(By.cssSelector(".js-cancel-edit"),5);
         //Thread.sleep(2000);
         WebElement cancelListCreatingButton = driver.findElement(By.cssSelector(".js-cancel-edit"));
         cancelListCreatingButton.click();
         //Thread.sleep(2000);
         waitUntilElementIsInvisible(By.cssSelector(".js-cancel-edit"),5);
+
 
     }
     @Test
