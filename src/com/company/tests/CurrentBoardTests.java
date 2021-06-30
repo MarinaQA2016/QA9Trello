@@ -12,29 +12,40 @@ import java.util.List;
 public class CurrentBoardTests extends TestBase{
     @BeforeMethod
     public void initTests() throws InterruptedException {
-        Thread.sleep(5000);
-        // click 'Log in' button
+        waitUntilElementIsClickable(By.cssSelector(".text-primary"),40);
         driver.findElement(By.cssSelector(".text-primary")).click();
-        Thread.sleep(3000);
+        //Thread.sleep(3000);
+        waitUntilElementIsClickable(By.id("login"),10);
         // fill in email field
         WebElement emailField = driver.findElement(By.id("user"));
         editField(emailField, LOGIN);
-        Thread.sleep(3000);
+        waitUntilElementIsClickable(By.xpath("//input[@value = 'Log in with Atlassian']"),5);
+        WebElement loginAsAttl = driver.findElement(By.xpath("//input[@value = 'Log in with Atlassian']"));
+
         // press 'Log in with Atlassian' button
-        driver.findElement(By.id("login")).click();
-        Thread.sleep(3000);
+        loginAsAttl.click();
+        waitUntilElementIsClickable(By.id("password"),5);
+
         // fill in password field
         WebElement passwordField = driver.findElement(By.id("password"));
         editField(passwordField, PASSWORD);
+
         // press log-in button
+        waitUntilElementIsClickable(By.id("login-submit"),5);
         driver.findElement(By.id("login-submit")).click();
-        Thread.sleep(20000);
+        waitUntilElementIsClickable(By.xpath("(//button[@data-test-id='header-boards-menu-button']/span)[2]"),30);
+
         //  go to the 'Boards' tab
+        waitUntilElementIsClickable(By.xpath("//a[@data-test-id = 'home-team-boards-tab']"),10);
         driver.findElement(By.xpath("//a[@data-test-id = 'home-team-boards-tab']")).click();
-        Thread.sleep(3000);
+        Thread.sleep(1000);
+        waitUntilElementIsClickable(By.xpath("//a[@class = 'board-tile'][.//div[@title='QA Haifa9']]"),10);
         // open 'QA Haifa9' board
-        driver.findElement(By.xpath("//a[@class = 'board-tile'][.//div[@title='QA Haifa9']]")).click();
-        Thread.sleep(3000);
+        WebElement qaHaifa9Board = driver.findElement(By.xpath("//a[@class = 'board-tile'][.//div[@title='QA Haifa9']]"));
+        qaHaifa9Board.click();
+        //Thread.sleep(3000);
+        waitUntilElementIsClickable(By.cssSelector(".placeholder"),10);
+        waitUntilAllElementsArePresent(By.cssSelector(".js-list-content"),10);
 
     }
 
@@ -52,10 +63,12 @@ public class CurrentBoardTests extends TestBase{
         WebElement saveListButton = driver.findElement(By.cssSelector(".js-save-edit"));
         saveListButton.click();
         // click 'x' button to cancel new list creating
-        Thread.sleep(2000);
+        waitUntilElementIsClickable(By.cssSelector(".js-cancel-edit"),5);
+        //Thread.sleep(2000);
         WebElement cancelListCreatingButton = driver.findElement(By.cssSelector(".js-cancel-edit"));
         cancelListCreatingButton.click();
-        Thread.sleep(2000);
+        //Thread.sleep(2000);
+        waitUntilElementIsInvisible(By.cssSelector(".js-cancel-edit"),5);
 
     }
     @Test
@@ -76,6 +89,7 @@ public class CurrentBoardTests extends TestBase{
     @Test
     public void archiveFirstList() throws InterruptedException {
         List<WebElement> collumnsList = driver.findElements(By.cssSelector(".js-list-content"));
+        System.out.println("size: " + collumnsList.size());
         if (collumnsList.size() == 0){
             System.out.println("size: " + collumnsList.size());
             // press 'Add list button'

@@ -45,9 +45,24 @@ public class TestBase {
             e.printStackTrace();
         }
     }
+    public void waitUntilAllElementsArePresent(By locator, int time) {
+        try {
+            new WebDriverWait(driver, time).until(ExpectedConditions.presenceOfAllElementsLocatedBy(locator));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     public void waitUntilElementIsVisible(By locator, int time) {
         try {
             new WebDriverWait(driver, time).until(ExpectedConditions.visibilityOfElementLocated(locator));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void waitUntilElementIsInvisible(By locator, int time) {
+        try {
+            new WebDriverWait(driver, time).until(ExpectedConditions.invisibilityOfElementLocated(locator));
         } catch (Exception e) {
             e.printStackTrace();
         }

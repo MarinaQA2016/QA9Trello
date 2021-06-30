@@ -53,21 +53,25 @@ public class LoginTests extends TestBase{
         // fill in email field
         WebElement emailField = driver.findElement(By.id("user"));
         editField(emailField, LOGIN);
-        Thread.sleep(3000);
+        waitUntilElementIsClickable(By.xpath("//input[@value = 'Log in with Atlassian']"),5);
+        WebElement loginAsAttl = driver.findElement(By.xpath("//input[@value = 'Log in with Atlassian']"));
+
         // press 'Log in with Atlassian' button
-        driver.findElement(By.id("login")).click();
-        Thread.sleep(3000);
+        loginAsAttl.click();
+        waitUntilElementIsClickable(By.id("password"),5);
+
         // fill in password field
         WebElement passwordField = driver.findElement(By.id("password"));
-                editField(passwordField, PASSWORD);
+        editField(passwordField, PASSWORD);
+
         // press log-in button
+        waitUntilElementIsClickable(By.id("login-submit"),5);
         driver.findElement(By.id("login-submit")).click();
-        Thread.sleep(20000);
+        waitUntilElementIsClickable(By.xpath("(//button[@data-test-id='header-boards-menu-button']/span)[2]"),30);
 
         Assert.assertEquals(driver
                 .findElement(By.xpath("(//button[@data-test-id='header-boards-menu-button']/span)[2]")).getText(),"Boards",
         "Name of the button is not 'Boards'");
-
 
     }
 
