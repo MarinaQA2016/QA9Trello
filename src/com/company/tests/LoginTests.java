@@ -1,5 +1,8 @@
 package com.company.tests;
 
+import com.company.pages.BoardsPageHelper;
+import com.company.pages.HomePageHelper;
+import com.company.pages.LoginPageHelper;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -14,62 +17,36 @@ import sun.rmi.log.LogInputStream;
 import sun.security.util.Password;
 
 public class LoginTests extends TestBase{
+    HomePageHelper homePage;
+    LoginPageHelper loginPage;
+    BoardsPageHelper boardsPage;
 
     @BeforeMethod
-    public void initTests() throws InterruptedException {
-        //Thread.sleep(5000);
-        // click 'Log in' button
-        waitUntilElementIsClickable(By.cssSelector(".text-primary"),40);
-        driver.findElement(By.cssSelector(".text-primary")).click();
-        //Thread.sleep(3000);
-        waitUntilElementIsClickable(By.id("login"),10);
+    public void initTests()  {
+        homePage = new HomePageHelper(driver);
+        loginPage = new LoginPageHelper(driver);
+        boardsPage = new BoardsPageHelper(driver);
+
+
+        homePage.waitUntilPageIsLoaded();
+        loginPage.openPage();
+        loginPage.waitUntilPageIsLoaded();
 
     }
 
 
 
     @Test
-    public void negativeLogin() throws InterruptedException {
-
-        // fill in email field
-        WebElement emailField = driver.findElement(By.id("user"));
-        editField(emailField,"ttttmmm");
-        // fill in password field
-        WebElement passwordField = driver.findElement(By.id("password"));
-        editField(passwordField,"pppppppp");
-        // press log in button
-        driver.findElement(By.id("login")).click();
-        // Output error-message
-        waitUntilElementIsVisible(By.cssSelector("p.error-message"),10);
-        System.out.println("Message: " + driver.findElement(By.cssSelector("p.error-message")).getText());
-
-        Assert.assertEquals(driver
-                .findElement(By.cssSelector("p.error-message")).getText(),"There isn't an account for this username",
+    public void negativeLogin()  {
+        loginPage.loginNotAttl("ttttmmm","pppppppp");
+        Assert.assertEquals(loginPage.getErrorMessage(),"There isn't an account for this username",
                 "The error message is not correct");
     }
     @Test
-    public void positiveLogin() throws InterruptedException {
-        // fill in email field
-        WebElement emailField = driver.findElement(By.id("user"));
-        editField(emailField, LOGIN);
-        waitUntilElementIsClickable(By.xpath("//input[@value = 'Log in with Atlassian']"),5);
-        WebElement loginAsAttl = driver.findElement(By.xpath("//input[@value = 'Log in with Atlassian']"));
-
-        // press 'Log in with Atlassian' button
-        loginAsAttl.click();
-        waitUntilElementIsClickable(By.id("password"),5);
-
-        // fill in password field
-        WebElement passwordField = driver.findElement(By.id("password"));
-        editField(passwordField, PASSWORD);
-
-        // press log-in button
-        waitUntilElementIsClickable(By.id("login-submit"),5);
-        driver.findElement(By.id("login-submit")).click();
-        waitUntilElementIsClickable(By.xpath("(//button[@data-test-id='header-boards-menu-button']/span)[2]"),30);
-
-        Assert.assertEquals(driver
-                .findElement(By.xpath("(//button[@data-test-id='header-boards-menu-button']/span)[2]")).getText(),"Boards",
+    public void positiveLogin()  {
+        loginPage.loginAsAttl(LOGIN,PASSWORD);
+        boardsPage.waitUntilPageIsLoaded();
+        Assert.assertEquals(boardsPage.getBoardsButtonName(),"Boards",
         "Name of the button is not 'Boards'");
 
     }
