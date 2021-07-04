@@ -33,19 +33,18 @@ public class LoginTests extends TestBase{
 
         // fill in email field
         WebElement emailField = driver.findElement(By.id("user"));
-        editField(emailField,"test");
+        editField(emailField,"ttttmmm");
         // fill in password field
         WebElement passwordField = driver.findElement(By.id("password"));
-        editField(passwordField,"password");
+        editField(passwordField,"pppppppp");
         // press log in button
         driver.findElement(By.id("login")).click();
         // Output error-message
         waitUntilElementIsVisible(By.cssSelector("p.error-message"),10);
-
+        System.out.println("Message: " + driver.findElement(By.cssSelector("p.error-message")).getText());
 
         Assert.assertEquals(driver
-                .findElements(By.cssSelector("p.error-message")).get(0).getText(),
-                "Your account has been updated. Please check your email to continue using Trello.",
+                .findElement(By.cssSelector("p.error-message")).getText(),"There isn't an account for this username",
                 "The error message is not correct");
     }
     @Test
