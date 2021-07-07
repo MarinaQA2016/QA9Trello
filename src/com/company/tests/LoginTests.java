@@ -27,7 +27,6 @@ public class LoginTests extends TestBase{
         loginPage = new LoginPageHelper(driver);
         boardsPage = new BoardsPageHelper(driver);
 
-
         homePage.waitUntilPageIsLoaded();
         loginPage.openPage();
         loginPage.waitUntilPageIsLoaded();

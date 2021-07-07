@@ -22,12 +22,11 @@ public class CurrentBoardTests extends TestBase{
     CurrentBoardPageHelper qaHaifa9Board;
 
     @BeforeMethod
-    public void initTests() throws InterruptedException {
+    public void initTests()  {
         homePage = new HomePageHelper(driver);
         loginPage = new LoginPageHelper(driver);
         boardsPage = new BoardsPageHelper(driver);
         qaHaifa9Board = new CurrentBoardPageHelper(driver, "QA Haifa9");
-
 
         homePage.waitUntilPageIsLoaded();
         loginPage.openPage();
@@ -51,7 +50,7 @@ public class CurrentBoardTests extends TestBase{
 
 
     @Test
-    public void addNewCardTest() throws InterruptedException {
+    public void addNewCardTest()  {
         int beginLists = qaHaifa9Board.getListsQuantity();
         if (beginLists == 0){
            qaHaifa9Board.addNewList("ForNewCard");
@@ -92,7 +91,7 @@ public class CurrentBoardTests extends TestBase{
     }
 
     @Test
-    public void copyFirstList() throws InterruptedException {
+    public void copyFirstList()  {
         int beginLists = qaHaifa9Board.getListsQuantity();
         if (beginLists == 0){
             qaHaifa9Board.addNewList("TestList");

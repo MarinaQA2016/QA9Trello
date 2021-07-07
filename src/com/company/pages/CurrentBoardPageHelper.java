@@ -78,15 +78,7 @@ public class CurrentBoardPageHelper extends PageBase {
     }
 
     public void archiveFirstList() {
-        int beginLists = this.getListsQuantity();
-        // -- click on the header menu
-        waitUntilElementIsClickable(By.cssSelector(".list-header-extras-menu"),5);
-        driver.findElement(By.cssSelector(".list-header-extras-menu")).click();
-
-        // -- click on "Archive menu"
-        waitUntilElementIsClickable(By.cssSelector(".js-close-list"),5);
-        driver.findElement(By.cssSelector(".js-close-list")).click();
-        waitUntilElementsBecome(By.cssSelector(".js-list-content"),beginLists-1,5);
+       this.archiveList(0);
     }
 
     public void copyFirstList(String name) {
