@@ -31,9 +31,7 @@ public class LoginTests extends TestBase{
         homePage.waitUntilPageIsLoaded();
         loginPage.openPage();
         loginPage.waitUntilPageIsLoaded();
-
     }
-
 
 
     @Test

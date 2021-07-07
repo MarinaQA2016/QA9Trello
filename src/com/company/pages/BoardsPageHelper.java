@@ -17,4 +17,12 @@ public class BoardsPageHelper extends PageBase{
         return driver
                 .findElement(By.xpath("(//button[@data-test-id='header-boards-menu-button']/span)[2]")).getText();
     }
+
+    public void openBoardsMenu() {
+        waitUntilElementIsClickable(By.xpath("//a[@data-test-id = 'home-team-boards-tab']"),10);
+        driver.findElement(By.xpath("//a[@data-test-id = 'home-team-boards-tab']")).click();
+        //waitUntilElementIsVisible(By.xpath("//h3[contains(text(),'Your Workspace boards')]"),10);
+        waitUntilElementTextIs(By.xpath("//h3"),"Your Workspace boards",10);
+
+    }
 }
