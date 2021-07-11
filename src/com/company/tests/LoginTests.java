@@ -7,6 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -17,15 +18,15 @@ import sun.rmi.log.LogInputStream;
 import sun.security.util.Password;
 
 public class LoginTests extends TestBase{
-    HomePageHelper homePage;
+    //HomePageHelper homePage;
     LoginPageHelper loginPage;
     BoardsPageHelper boardsPage;
 
     @BeforeMethod
     public void initTests()  {
-        homePage = new HomePageHelper(driver);
-        loginPage = new LoginPageHelper(driver);
-        boardsPage = new BoardsPageHelper(driver);
+       // homePage = PageFactory.initElements(driver, HomePageHelper.class);
+        loginPage = PageFactory.initElements(driver, LoginPageHelper.class);
+        boardsPage = PageFactory.initElements(driver, BoardsPageHelper.class);
 
         homePage.waitUntilPageIsLoaded();
         loginPage.openPage();

@@ -3,23 +3,32 @@ package com.company.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class CurrentBoardPageHelper extends PageBase {
+    @FindBy(css = ".placeholder")
+    WebElement addListButton;
+    @FindBy(css = ".js-list-content")
+    List<WebElement> collumnsList;
+
     String boardName;
     public CurrentBoardPageHelper(WebDriver driver, String boardName){
         this.driver = driver;
         this.boardName = boardName;
+        PageFactory.initElements(driver,this);
     }
 
-    public void openPage() {
+    public CurrentBoardPageHelper openPage() {
         waitUntilElementIsClickable(getLocatorBoardButton(),10);
         // open 'QA Haifa9' board
         WebElement qaHaifa9Board = driver.findElement(getLocatorBoardButton());
         qaHaifa9Board.click();
+        return this;
     }
 
     public By getLocatorBoardButton(){
@@ -27,15 +36,15 @@ public class CurrentBoardPageHelper extends PageBase {
     }
 
     public void waitUntilPageIsLoaded() {
-        waitUntilElementIsClickable(By.cssSelector(".placeholder"),10);
-        WebElement addButton = driver.findElement(By.cssSelector(".placeholder"));
+        waitUntilElementIsClickable(addListButton,10);
 
-        if (addButton.getText().equals("Add another list")) {
-            waitUntilAllElementsArePresent(By.cssSelector(".js-list-content"),5);
+        if (addListButton.getText().equals("Add another list")) {
+            //waitUntilAllElementsArePresent(By.cssSelector(".js-list-content"),5);
+            waitUntilAllElementsAreVisible(collumnsList,10);
         }
     }
     public int getListsQuantity() {
-        List<WebElement> collumnsList = driver.findElements(By.cssSelector(".js-list-content"));
+        //List<WebElement> collumnsList = driver.findElements(By.cssSelector(".js-list-content"));
         return collumnsList.size();
     }
     public int getCardsQuantity() {

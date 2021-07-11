@@ -8,6 +8,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -16,26 +17,29 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class CurrentBoardTests extends TestBase{
-    HomePageHelper homePage;
+    //HomePageHelper homePage;
     LoginPageHelper loginPage;
     BoardsPageHelper boardsPage;
     CurrentBoardPageHelper qaHaifa9Board;
 
     @BeforeMethod
     public void initTests()  {
-        homePage = new HomePageHelper(driver);
-        loginPage = new LoginPageHelper(driver);
-        boardsPage = new BoardsPageHelper(driver);
+        //homePage = PageFactory.initElements(driver,HomePageHelper.class);
+        loginPage = PageFactory.initElements(driver,LoginPageHelper.class);
+        boardsPage = PageFactory.initElements(driver,BoardsPageHelper.class);
         qaHaifa9Board = new CurrentBoardPageHelper(driver, "QA Haifa9");
 
         homePage.waitUntilPageIsLoaded();
-        loginPage.openPage();
-        loginPage.waitUntilPageIsLoaded();
-        loginPage.loginAsAttl(LOGIN,PASSWORD);
-        boardsPage.waitUntilPageIsLoaded();
-        boardsPage.openBoardsMenu();
-        qaHaifa9Board.openPage();
-        qaHaifa9Board.waitUntilPageIsLoaded();
+        loginPage
+                .openPage()
+                .waitUntilPageIsLoaded()
+                .loginAsAttl(LOGIN,PASSWORD);
+        boardsPage
+                .waitUntilPageIsLoaded()
+                .openBoardsMenu();
+        qaHaifa9Board
+                .openPage()
+                .waitUntilPageIsLoaded();
     }
 
 
