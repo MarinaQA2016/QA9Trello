@@ -6,19 +6,20 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-public class MenuPageTests extends TestBase{
+public class ActivityPageTests extends TestBase{
     LoginPageHelper loginPage;
     BoardsPageHelper boardsPage;
     CurrentBoardPageHelper qaHaifa9Board;
     MenuPageHelper menuPage;
-
+    ActivityPageHelper activityPage;
 
     @BeforeMethod
     public void initTests(){
-        loginPage = PageFactory.initElements(driver,LoginPageHelper.class);
-        boardsPage = PageFactory.initElements(driver,BoardsPageHelper.class);
+        loginPage = PageFactory.initElements(driver, LoginPageHelper.class);
+        boardsPage = PageFactory.initElements(driver, BoardsPageHelper.class);
         qaHaifa9Board = new CurrentBoardPageHelper(driver, "QA Haifa9");
         menuPage = PageFactory.initElements(driver, MenuPageHelper.class);
+        activityPage = PageFactory.initElements(driver, ActivityPageHelper.class);
 
         homePage.waitUntilPageIsLoaded();
         loginPage.openPage();
@@ -28,12 +29,17 @@ public class MenuPageTests extends TestBase{
         boardsPage.openBoardsMenu();
         qaHaifa9Board.openPage();
         qaHaifa9Board.waitUntilPageIsLoaded();
+        //menuPage.openPage();
+        //menuPage.waitUntilPageIsLoaded();
+    }
+    @Test
+    public void creatingListInActivityTest(){
+        String listName = "ActivityTest";
+        qaHaifa9Board.addNewList(listName);
         menuPage.openPage();
         menuPage.waitUntilPageIsLoaded();
-    }
-
-    @Test
-    public void profileVisibilityMenuExists(){
-        Assert.assertEquals(menuPage.getProfileVisibilityMenuName(),"Profile and visibility");
+        menuPage.openActivityPage();
+        activityPage.waitUntilPageIsLoaded();
+        Assert.assertTrue(activityPage.lastActivityContains(listName));
     }
 }
